@@ -17,7 +17,7 @@ class Ground {
         push()
         translate(groundPos.x, groundPos.y);
         rectMode(CENTER);
-        strokWeight(3);
+        strokeWeight(3);
         fill("white");
         rect(0,0,this.width, this.height);
         pop()
