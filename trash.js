@@ -1,21 +1,28 @@
 class Trash {
     constructor(x,y){
-        var options = {
-            isStatic:true
-        }
+        
         this.x=x;
         this.y=y;
         this.trashWidth = 200;
         this.trashHeight = 100;
         this.trashThickness = 20;
         this.trashAngle = 0;
+        var options = {
+            isStatic:true
+        }
         this.trashBottomBody = Bodies.rectangle(this.x, this.y, this.trashWidth, this.trashThickness, options);
         World.add(world, this.trashBottomBody);
-        this.trashLeftBody = Bodies.rectangle(this.x - this.trashWidth/2, this.y - this.trashHeight/2, this.trashThickness, options);
-        Matter.Body.setAngle(this.trashLeftBody, this.trashAngle);
+        var options1 = {
+            isStatic:true
+        }
+        this.trashLeftBody = Bodies.rectangle(this.x - this.trashWidth/2, this.y - this.trashHeight/2, this.trashThickness, options1);
+        Matter.Body.setAngle(this.trashLeftBody, this.angle);
         World.add(world, this.trashLeftBody);
-        this.trashRightBody = Bodies.rectangle(this.x + this.trashWidth/2, this.y - this.trashHeight/2, this.trashThickness, options);
-        Matter.Body.setAngle(this.trashRightBody, this.trashAngle);
+        var options2 = {
+            isStatic:true
+        }
+        this.trashRightBody = Bodies.rectangle(this.x + this.trashWidth/2, this.y - this.trashHeight/2, this.trashThickness, options2);
+        Matter.Body.setAngle(this.trashRightBody, -1 * this.angle);
         World.add(world, this.trashRightBody);
     }
 
@@ -25,29 +32,35 @@ class Trash {
 
     display(){
         
-        var posBottom = this.bottomBody.position;
+        var posBottom = this.trashBottomBody.position;
+        var posLeft = this.trashLeftBody.position;
+        var posRight = this.trashRightBody.position;
+        
         push()
     translate(posBottom.x, posBottom.y);
     rectMode(CENTER);
-    strokWeight(3);
+    angleMode(RADIANS);
+    strokeWeight(3);
     fill("white");
-    rect(0,0,this.trashThickness, this.trashThickness);
+    rect(0,0,this.trashWidth, this.trashThickness);
 
     pop()
-        var posLeft = this.leftWallBody.position;
         push()
     translate(posLeft.x, posLeft.y);
+    rotate(this.angle);
     rectMode(CENTER);
-    strokWeight(3);
+    angleMode(RADIANS);
+    strokeWeight(3);
     fill("white");
     rect(0,0,this.trashWidth, this.trashHeight);
 
     pop()
-        var posRight = this.rightWallBody.position;
         push()
     translate(posRight.x, posRight.y);
+    rotate(-1 * this.angle);
     rectMode(CENTER);
-    strokWeight(3);
+    angleMode(RADIANS);
+    strokeWeight(3);
     fill("white");
     rect(0,0,this.trashWidth, this.trashHeight);
 
